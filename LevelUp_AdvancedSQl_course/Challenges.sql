@@ -20,3 +20,5 @@ SELECT CU.firstName, CU.lastName, CU.customerId, S2.salesId, S2.salesAmount, S2.
 FROM CUSTOMER CU
 LEFT JOIN SALES S2 ON S2.customerId = CU.customerId
 WHERE S2.salesId IS NULL ;
+
+
