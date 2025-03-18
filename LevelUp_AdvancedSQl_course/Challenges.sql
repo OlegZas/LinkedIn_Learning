@@ -8,3 +8,15 @@ SELECT e.firstName, e.lastName, s.salesAmount
 FROM employee e
 LEFT JOIN sales s ON e.employeeId = s.employeeId 
 WHERE s.employeeId IS NULL AND UPPER(e.title) LIKE '%SALES%' ;
+
+-- 3. Get a list of all sales and all cusotmer even when some of the data has been removed. 
+-- there can be sales data without customer or customer without sales -- they were removed 
+
+SELECT C.firstName, C.lastName, C.customerId, S.salesId, S.salesAmount, S.soldDate 
+FROM sales S
+LEFT JOIN customer C ON S.customerId = C.customerId
+UNION  
+SELECT CU.firstName, CU.lastName, CU.customerId, S2.salesId, S2.salesAmount, S2.soldDate 
+FROM CUSTOMER CU
+LEFT JOIN SALES S2 ON S2.customerId = CU.customerId
+WHERE S2.salesId IS NULL ;
