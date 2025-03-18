@@ -28,3 +28,9 @@ INNER JOIN sales S ON E.employeeId = S.employeeId
 GROUP BY E.employeeId, firstName, lastName
 ORDER BY CARSSOLD DESC
 
+--5. LEAST AND MOST EXPENSIVE SALE BY EACH EMPLOYEE THIS YEAR 
+SELECT E.employeeId, firstName, lastName, MIN(S.salesAmount) AS LEASTEXPENSIVE, MAX(S.salesAmount) AS MOSTEXPENSIVE, COUNT(S.salesId) AS CARSSOLD
+FROM EMPLOYEE E 
+INNER JOIN SALES S ON E.employeeId = S.employeeId
+GROUP BY E.employeeId, firstName, lastName
+ORDER BY CARSSOLD DESC
