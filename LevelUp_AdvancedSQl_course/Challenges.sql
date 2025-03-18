@@ -32,5 +32,6 @@ ORDER BY CARSSOLD DESC
 SELECT E.employeeId, firstName, lastName, MIN(S.salesAmount) AS LEASTEXPENSIVE, MAX(S.salesAmount) AS MOSTEXPENSIVE, COUNT(S.salesId) AS CARSSOLD
 FROM EMPLOYEE E 
 INNER JOIN SALES S ON E.employeeId = S.employeeId
+WHERE STRFTIME('%Y', soldDate) = '2022'
 GROUP BY E.employeeId, firstName, lastName
 ORDER BY CARSSOLD DESC
