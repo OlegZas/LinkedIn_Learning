@@ -21,4 +21,8 @@ FROM CUSTOMER CU
 LEFT JOIN SALES S2 ON S2.customerId = CU.customerId
 WHERE S2.salesId IS NULL ;
 
-
+-- 4. Number of cars sold by each employee 
+SELECT E.employeeId, firstName, lastName, COUNT(S.salesId) AS CARSSOLD
+FROM employee E
+INNER JOIN sales S ON E.employeeId = S.employeeId 
+GROUP BY E.employeeId, firstName, lastName
