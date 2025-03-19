@@ -43,3 +43,17 @@ INNER JOIN SALES S ON E.employeeId = S.employeeId
 WHERE STRFTIME('%Y', soldDate) = '2022' 
 GROUP BY E.employeeId, firstName, lastName
 HAVING COUNT(S.salesId) > 5;
+
+--7. Use CTE to show total sales per year 
+-- '$' || ...: Concatenates the dollar sign to the formatted number.
+-- printif - function is used to format numbers as floating-point values with a specific number of decimal places. 
+-- %: This is the placeholder that tells printf to expect a value to be formatted.
+-- .2: This specifies the number of decimal places you want to display (in this case, 2 decimal places).
+-- f: This stands for floating-point number formatting. It ensures that the value is displayed as a floating-point number, which includes decimal points.
+WITH YEARLYSALES AS (
+  SELECT STRFTIME('%Y', soldDate) AS YEAR, '$' || printf('%.2f', SUM(S.salesAmount)) AS TOTALSALES 
+  FROM SALES S 
+  GROUP BY YEAR
+)
+SELECT YEAR, TOTALSALES
+FROM YEARLYSALES
