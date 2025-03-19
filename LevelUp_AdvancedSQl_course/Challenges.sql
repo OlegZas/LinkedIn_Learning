@@ -71,3 +71,18 @@ WITH EMPLOYEES AS (
 SELECT firstName, lastName, T.*
 FROM EMPLOYEES E
 INNER JOIN TOTALSALES T ON E.employeeId = T.employeeId 
+
+
+-- 9. Use subquery to find all sale was for an electric car 
+-- A: 
+SELECT S.SALESID, S.soldDate
+FROM SALES S 
+INNER JOIN INVENTORY I ON S.inventoryId = I.inventoryId 
+  AND (SELECT UPPER(EngineType) FROM model E WHERE E.modelId = I.modelId) = 'ELECTRIC';
+-- B:
+  SELECT S.SALESID, S.soldDate, SUB.EngineType
+FROM (SELECT EngineType, inventoryId
+      FROM INVENTORY I 
+      INNER JOIN MODEL M ON I.modelId = M.modelId
+      WHERE UPPER(EngineType) = 'ELECTRIC') AS SUB
+INNER JOIN SALES S ON SUB.inventoryId = S.inventoryId;
