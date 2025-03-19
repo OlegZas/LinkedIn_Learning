@@ -35,3 +35,11 @@ INNER JOIN SALES S ON E.employeeId = S.employeeId
 WHERE STRFTIME('%Y', soldDate) = '2022'
 GROUP BY E.employeeId, firstName, lastName
 ORDER BY CARSSOLD DESC
+
+-- 6. Get a list of employees who have made more than 5 sales this year 
+SELECT E.employeeId, firstName, lastName, SUM(S.salesAmount) AS TOTALSALES, COUNT(S.salesId) AS CARSSOLD
+FROM EMPLOYEE E  
+INNER JOIN SALES S ON E.employeeId = S.employeeId
+WHERE STRFTIME('%Y', soldDate) = '2022' 
+GROUP BY E.employeeId, firstName, lastName
+HAVING COUNT(S.salesId) > 5;
