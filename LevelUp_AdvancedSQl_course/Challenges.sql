@@ -57,3 +57,17 @@ WITH YEARLYSALES AS (
 )
 SELECT YEAR, TOTALSALES
 FROM YEARLYSALES
+
+-- 8. Create a report that shows the amount of sale per employee for each month in 2021
+WITH EMPLOYEES AS (
+  SELECT employeeId, firstName, lastName
+  FROM employee E 
+), TOTALSALES AS (
+  SELECT SUM(salesAmount) AS TOTALSALES, employeeId, STRFTIME('%m', soldDate) AS MONTH
+  FROM sales
+  GROUP BY employeeId, STRFTIME('%M', soldDate)
+  HAVING STRFTIME('%Y', soldDate) = '2021'
+)
+SELECT firstName, lastName, T.*
+FROM EMPLOYEES E
+INNER JOIN TOTALSALES T ON E.employeeId = T.employeeId 
