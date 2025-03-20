@@ -103,3 +103,16 @@ GROUP BY e.firstname, e.lastname, e.employeeId, M.MODEL;
 -- INNER JOIN MODEL M ON I.MODELID = M.MODELID 
 -- GROUP BY E.employeeId
 -- ORDER BY UNITSSOLD desc
+
+--11. Generate a report showing total sales per month and an anual running total. 
+WITH MONTHLY AS ( 
+SELECT 
+    STRFTIME('%Y-%m', soldDate) AS month, 
+    SUM(salesAmount) AS monthlySales
+  FROM  SALES S
+GROUP BY 
+    STRFTIME('%Y-%m', soldDate))
+SELECT MONTH, MONTHLYSALES,SUM(MONTHLYSALES)OVER(ORDER BY month) AS RUNNINGTOTAL
+FROM MONTHLY 
+ORDER BY 
+    month;
