@@ -86,3 +86,12 @@ FROM (SELECT EngineType, inventoryId
       INNER JOIN MODEL M ON I.modelId = M.modelId
       WHERE UPPER(EngineType) = 'ELECTRIC') AS SUB
 INNER JOIN SALES S ON SUB.inventoryId = S.inventoryId;
+
+--10. Get the list of the sales people and rank the car models they've sold the most. 
+SELECT e.firstname || e.lastname AS NAME, e.employeeId, count(model) AS UnitsSold,sAmount,rank() over(partition by S.employeeID order by COUNT(M.modelId) DESC) as rankedSales, MODEL
+FROM employee e
+INNER JOIN SALES S on e.employeeId = S.employeeId
+INNER JOIN INVENTORY I ON S.INVENTORYID = I.INVENTORYID 
+INNER JOIN MODEL M ON I.MODELID = M.MODELID 
+GROUP BY e.firstname, e.lastname, e.employeeId, M.MODEL;
+;
